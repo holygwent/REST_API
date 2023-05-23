@@ -5,8 +5,6 @@ using Restaurant.Application.DTO;
 using Restaurant.Application.Services;
 using Restaurant.Infrastructure;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace Restaurant.API.Controllers
 {
     [Route("api/[controller]")]
@@ -45,9 +43,6 @@ namespace Restaurant.API.Controllers
         [HttpPost]
         public ActionResult CreateRestaurant([FromBody] CreateRestaurantDto dto)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
             var id = _restaurantService.Create(dto);
             return Created($"api/Restaurant/{id}", null);
         }
@@ -55,21 +50,15 @@ namespace Restaurant.API.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete([FromRoute] int id)
         {
-            var isDeleted = _restaurantService.Delete(id);
-            if (isDeleted == false)
-                return NotFound();
-
+            _restaurantService.Delete(id);
             return NoContent();
         }
 
         [HttpPut("{id}")]
         public ActionResult Update([FromBody] UpdateRestaurantDto dto, [FromRoute] int id )
         {
-            if(!ModelState.IsValid)
-                return BadRequest(ModelState);
-           var IsUpdated =  _restaurantService.Update(dto,id);
-            if (IsUpdated == false)
-                return NotFound();
+            _restaurantService.Update(dto,id);
+
             return Ok();
         }
     }
