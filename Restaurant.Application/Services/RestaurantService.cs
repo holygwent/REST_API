@@ -63,13 +63,13 @@ namespace Restaurant.Application.Services
             var restaurant = _mapper.Map<Restaurant.Domain.ORM.Restaurant>(dto);
             _context.Add(restaurant);
             _context.SaveChanges();
-            _logger.LogWarning($"Restaurant with id:{restaurant.Id} Add action invoked");
+            _logger.LogWarning($"Restaurant with id:{restaurant.Id} INSERT action invoked");
             return restaurant.Id;
         }
 
         public void Delete(int id)
         {
-            _logger.LogWarning($"Restaurant with id:{id} Delete action invoked");
+            _logger.LogWarning($"Restaurant with id:{id} DELETE action invoked");
             var restaurant = _context.Restaurants.FirstOrDefault(x => x.Id == id);
             if (restaurant is null) 
                 throw new NotFoundException($"there is no restaurant with id {id}");
@@ -83,7 +83,7 @@ namespace Restaurant.Application.Services
             var restaurant = _context.Restaurants.FirstOrDefault(x => x.Id == id);
             if (restaurant == null)
                 throw new NotFoundException($"there is no restaurant with id {id}");
-            _logger.LogWarning($"Restaurant with id:{id} Update action invoked");
+            _logger.LogWarning($"Restaurant with id:{id} UPDATE action invoked");
             restaurant.Name = dto.Name;
             restaurant.HasDelivery = dto.HasDelivery;
             restaurant.Description = dto.Description;
