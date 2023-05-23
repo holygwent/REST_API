@@ -17,13 +17,13 @@ namespace Restaurant.API.Controllers
             _dishService = dishService;
         }
         [HttpGet]
-        public ActionResult GetAll([FromRoute]int restaurantId)
+        public ActionResult<List<DishDto>> GetAll([FromRoute]int restaurantId)
         {
             var dishes = _dishService.GetAll(restaurantId);
             return Ok(dishes);
         }
         [HttpGet("{dishId}")]
-        public ActionResult Get([FromRoute] int restaurantId, [FromRoute] int dishId)
+        public ActionResult<DishDto> Get([FromRoute] int restaurantId, [FromRoute] int dishId)
         {
             var dish = _dishService.Get(restaurantId,dishId);
             return Ok(dish);
