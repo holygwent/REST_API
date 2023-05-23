@@ -1,6 +1,8 @@
 using Restaurant.Infrastructure.Services;
 using Restaurant.Infrastructure;
 using Restaurant.Application;
+using NLog.Web;
+using Restaurant.Infrastructure.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Host.UseNLog();
 
 var app = builder.Build();
 var scope = app.Services.CreateScope();
@@ -22,7 +25,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseMiddleware<ErrorHandlingMiddleware>();
+app.UseMiddleware<RequestTimeMiddleware>();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Restaurant.Infrastructure.Middleware;
 using Restaurant.Infrastructure.Services;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,9 @@ namespace Restaurant.Infrastructure
         {
             services.AddDbContext<RestaurantDbContext>();
             services.AddScoped<RestaurantSeederService>();
-          
+            services.AddScoped<ErrorHandlingMiddleware>();
+            services.AddScoped<RequestTimeMiddleware>();
+
 
         }
     }
