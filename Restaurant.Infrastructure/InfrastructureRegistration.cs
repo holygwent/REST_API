@@ -14,7 +14,8 @@ namespace Restaurant.Infrastructure
         {
             services.AddDbContext<RestaurantDbContext>();
             services.AddScoped<RestaurantSeederService>();
-      
+          
+
         }
     }
 }
