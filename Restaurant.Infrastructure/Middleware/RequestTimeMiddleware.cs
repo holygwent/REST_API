@@ -28,7 +28,7 @@ namespace Restaurant.Infrastructure.Middleware
             var elapsedMiliseconds = _stopWatch.ElapsedMilliseconds;
             if ((elapsedMiliseconds / 1000) > 4)
             {
-                var message = $"Request [{context.Request.Method}] at [{context.Request.Path}] took {(elapsedMiliseconds/1000)} m";
+                var message = $"Request [{context.Request.Method}] at [{context.Request.Path}] took {(elapsedMiliseconds/1000)} s";
                 _logger.LogInformation(message);
             }
         }
