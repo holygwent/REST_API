@@ -54,6 +54,7 @@ namespace Restaurant.API.Controllers
             return NoContent();
         }
 
+
         [HttpPut("{id}")]
         public ActionResult Update([FromBody] UpdateRestaurantDto dto, [FromRoute] int id )
         {
