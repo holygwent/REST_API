@@ -24,6 +24,8 @@ namespace Restaurant.Application.Mapper
             CreateMap<CreateRestaurantDto, Restaurant.Domain.ORM.Restaurant>()
                 .ForMember(x => x.Address, c => c.MapFrom(dto => new Address { City = dto.City, Street = dto.Street, PostaCode = dto.PostalCode }));
 
+            CreateMap<CreateDishDto, Dish>();
+                
         }
     }
 }
