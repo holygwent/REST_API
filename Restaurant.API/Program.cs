@@ -3,13 +3,15 @@ using Restaurant.Infrastructure;
 using Restaurant.Application;
 using NLog.Web;
 using Restaurant.Infrastructure.Middleware;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddInfrastructureServices();
 builder.Services.AddApplicationServices();
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(option=>
+        option.JsonSerializerOptions.ReferenceHandler= ReferenceHandler.IgnoreCycles);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
