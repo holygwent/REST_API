@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Restaurant.Application.DTO
 {
+    
     public class CreateRestaurantDto
     {
         public string Category { get; set; }

@@ -10,8 +10,8 @@ namespace Restaurant.Infrastructure.Services
     public class RestaurantSeederService
     {
         private readonly RestaurantDbContext _dbContext;
-        private readonly List<Restaurant.Domain.ORM.Restaurant> _restaurants = new List<Restaurant.Domain.ORM.Restaurant>() 
-        { 
+        private readonly List<Restaurant.Domain.ORM.Restaurant> _restaurants = new List<Restaurant.Domain.ORM.Restaurant>()
+        {
             new Restaurant.Domain.ORM.Restaurant()
             {
                 Name = "KFC",
@@ -55,16 +55,30 @@ namespace Restaurant.Infrastructure.Services
                 }
             }
         };
-
+        private readonly List<Role> _roles = new List<Role>()
+        {
+            new Role(){Id=1,Name="User"},
+            new Role(){Id=2,Name="Manager"},
+            new Role(){Id=3,Name="Admin"}
+        };
         public RestaurantSeederService(RestaurantDbContext dbContext)
         {
             _dbContext = dbContext;
         }
+
+
         public void Seed()
         {
-            if(_dbContext.Database.CanConnect())
+
+            if (_dbContext.Database.CanConnect())
             {
-                if(!_dbContext.Restaurants.Any())
+                if (!_dbContext.Roles.Any())
+                {
+                    _dbContext.Roles.AddRange(_roles);
+                    _dbContext.SaveChanges();
+                }
+
+                if (!_dbContext.Restaurants.Any())
                 {
                     _dbContext.Restaurants.AddRange(_restaurants);
                     _dbContext.SaveChanges();

@@ -14,7 +14,8 @@ namespace Restaurant.Infrastructure
         public DbSet<Restaurant.Domain.ORM.Restaurant> Restaurants { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Dish> Dishes { get; set; }
-
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Restaurant.Domain.ORM.Restaurant>()
@@ -33,7 +34,14 @@ namespace Restaurant.Infrastructure
             modelBuilder.Entity<Dish>()
                 .Property(p => p.Name)
                 .IsRequired();
-            
+
+            modelBuilder.Entity<User>()
+                .Property(p => p.Email)
+                .IsRequired();
+
+            modelBuilder.Entity<Role>()
+                .Property(p => p.Name)
+                .IsRequired();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

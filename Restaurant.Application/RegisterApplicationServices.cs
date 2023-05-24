@@ -1,5 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
+using Restaurant.Application.DTO;
 using Restaurant.Application.Services;
+using Restaurant.Application.Validation;
+using Restaurant.Domain.ORM;
 using Restaurant.Infrastructure.Services;
 using System;
 using System.Collections.Generic;
@@ -13,10 +18,14 @@ namespace Restaurant.Application
     {
         public static void AddApplicationServices(this IServiceCollection services)
         {
-            
+       
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<IRestaurantService, RestaurantService>();
             services.AddScoped<IDishService, DishService>();
+            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IPasswordHasher<User>,PasswordHasher<User>>();
+            services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
+          
 
         }
     }
