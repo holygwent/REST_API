@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using Restaurant.Application.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Restaurant.Infrastructure.AuthorizationPolicy;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +43,11 @@ builder.Services.AddControllers()
 builder.Services.AddApplicationServices();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddAuthorization(option =>
+{
+    option.AddPolicy("HasNationality", builder => builder.RequireClaim("Nationality", "Polish", "German"));
+    option.AddPolicy("AtLeast20", builder => builder.AddRequirements(new MinimumAgeRequirement(20)));
+});
 builder.Host.UseNLog();
 var app = builder.Build();
 var scope = app.Services.CreateScope();
@@ -59,7 +65,6 @@ app.UseAuthentication();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

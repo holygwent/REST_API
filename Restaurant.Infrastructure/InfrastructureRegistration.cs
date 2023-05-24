@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.DependencyInjection;
+using Restaurant.Infrastructure.AuthorizationPolicy;
 using Restaurant.Infrastructure.Middleware;
 using Restaurant.Infrastructure.Services;
 using System;
@@ -17,7 +19,7 @@ namespace Restaurant.Infrastructure
             services.AddScoped<RestaurantSeederService>();
             services.AddScoped<ErrorHandlingMiddleware>();
             services.AddScoped<RequestTimeMiddleware>();
-
+            services.AddScoped<IAuthorizationHandler, MinimumAgeRequirementHandler>();
 
         }
     }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Restaurant.Application.DTO;
 using Restaurant.Application.Services;
 
@@ -8,6 +9,7 @@ namespace Restaurant.API.Controllers
 {
     [Route("api/Restaurant/{restaurantId}/[controller]")]
     [ApiController]
+    [Authorize]
     public class DishController : ControllerBase
     {
         private readonly IDishService _dishService;
@@ -29,18 +31,21 @@ namespace Restaurant.API.Controllers
             return Ok(dish);
         }
         [HttpPost]
+        [Authorize(Roles = "Manager,Admin")]
         public ActionResult Post([FromRoute]int restaurantId, [FromBody]CreateDishDto dto)
         {
             var newDishId = _dishService.Create(restaurantId, dto);
             return Created($"api/Restaurant/{restaurantId}/Dish/{newDishId}",null);
         }
         [HttpDelete]
+        [Authorize(Roles = "Manager,Admin")]
         public ActionResult DeleteAllDish([FromRoute] int restaurantId)
         {
             _dishService.DeleteAll(restaurantId);
             return NoContent();
         }
         [HttpDelete("{dishId}")]
+        [Authorize(Roles = "Manager,Admin")]
         public ActionResult DeleteAllDish([FromRoute] int restaurantId, [FromRoute] int dishId)
         {
             _dishService.Delete(restaurantId,dishId);
