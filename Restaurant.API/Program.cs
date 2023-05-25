@@ -42,6 +42,16 @@ builder.Services.AddControllers()
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddApplicationServices();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("FronEndClient", builder =>
+    {
+        builder.AllowAnyMethod()
+        .AllowAnyHeader()
+        .WithOrigins("https://localhost:8080");
+        //.AllowAnyOrigin();
+    });
+});
 builder.Services.AddSwaggerGen();
 builder.Services.AddAuthorization(option =>
 {
@@ -50,6 +60,7 @@ builder.Services.AddAuthorization(option =>
 });
 builder.Host.UseNLog();
 var app = builder.Build();
+app.UseCors("FrontEndClient");
 var scope = app.Services.CreateScope();
 var seeder = scope.ServiceProvider.GetRequiredService<RestaurantSeederService>();
 seeder.Seed();
