@@ -61,6 +61,7 @@ builder.Services.AddAuthorization(option =>
 builder.Host.UseNLog();
 var app = builder.Build();
 app.UseCors("FrontEndClient");
+app.UseStaticFiles();
 var scope = app.Services.CreateScope();
 var seeder = scope.ServiceProvider.GetRequiredService<RestaurantSeederService>();
 seeder.Seed();
